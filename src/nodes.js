@@ -68,7 +68,10 @@ module.exports = {
         }
         break;
       case "symbol_literal":
-        if (preferHashLabels && path.getValue().body[0].body.length === 1) {
+        const thing = path.getValue().body[0].body[0].body[0].body
+        const endsInEquals = /=$/.test(thing)
+        if (preferHashLabels && path.getValue().body[0].body.length === 1 && !endsInEquals) {
+          // console.log(JSON.stringify(path.getValue().body[0].body[0].body[0].body))
           const { comments, start } = path.getValue().body[0];
           const node = concat([path.call(print, "body", 0, "body", 0, "body", 0), ":"]);
 
