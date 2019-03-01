@@ -679,6 +679,8 @@ exports[`for the off.json config hash.rb matches expected output 1`] = `
 
 { :a => \\"a\\", :b => \\"b\\", :c => \\"c\\" }
 
+{ :group= => 1 }
+
 { :a => \\"a\\", :b => \\"b\\", :c => \\"c\\" }
 
 { Foo => 1, Bar => 2 }
@@ -2202,6 +2204,8 @@ exports[`for the on.json config hash.rb matches expected output 1`] = `
 {}
 
 { a: 'a', b: 'b', c: 'c' }
+
+{ :group= => 1 }
 
 { a: 'a', b: 'b', c: 'c' }
 
