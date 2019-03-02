@@ -1,17 +1,31 @@
 require "bundler/setup"
 require "minitest/autorun"
+require "open3"
 
 describe "Hashes" do
   it "converts symbol keys away from hash rocket syntax" do
-    result = apply_prettier("{ :group => 1 }")
-
-    assert_equal "{ group: 1 }", result
+    assert_equal_and_valid(
+      "{ :group => 1 }",
+      "{ group: 1 }",
+    )
   end
 
   it "does not convert symbol keys ending in equlas from hash rocket syntax" do
-    result = apply_prettier("{ :group= => 1 }")
+    assert_equal_and_valid(
+      "{ :group= => 1 }",
+      "{ :group= => 1 }",
+    )
+  end
 
-    assert_equal "{ :group= => 1 }", result
+  def assert_equal_and_valid(input, expected)
+    result = apply_prettier(input)
+    assert_equal expected, result
+    ensure_valid(expected)
+  end
+
+  def ensure_valid(string)
+    _, stderr_str, status = Open3.capture3("ruby -c", stdin_data: string)
+    assert_equal status.success?, true, stderr_str
   end
 
   def apply_prettier(string)
